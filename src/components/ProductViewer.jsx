@@ -1,15 +1,20 @@
 import React from 'react'
 import useMacbookStore from "../store";
 import clsx from 'clsx';
+import { Canvas } from '@react-three/fiber';
+import { Box, OrbitControls } from '@react-three/drei';
 
 const ProductViewer = () => {
     const { color, scale, setColor, setScale } = useMacbookStore();
 
     return (
         <section id="product-viewer">
-            {/* 👇 Yeh .controls container add karte hi styling apply ho jayegi */}
+            <h2>Take a closer look.</h2>
+
             <div className="controls">
-                <p className="info">MacBook {scale} in {color}</p>
+                <p className="info">
+                    MacBook Pro {scale === 0.06 ? '14"' : '16"'} in {color === '#adb5bd' ? 'Silver' : 'Space Black'}
+                </p>
 
                 <div className="flex-center gap-5 mt-5">
                     <div className="color-control">
@@ -40,9 +45,17 @@ const ProductViewer = () => {
                     </div>
                 </div>
             </div>
+            <Canvas id="canvas" camera={{ position: [0, 2, 5], fav: 50, near: 0.1, far: 100 }} >
+                <Box position={[0, 0, 0]} scale={10 * scale} material-color={color} />
 
-            <p className="text-white text-4xl">Render Canvas</p>
-        </section>
+                <OrbitControls enableZoom={false} />
+
+
+
+
+
+            </Canvas>
+        </section >
     )
 }
 
